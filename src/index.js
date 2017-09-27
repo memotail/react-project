@@ -5,6 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import { AppContainer } from 'react-hot-loader';
+import { BrowserRouter as Router } from "react-router-dom";
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 
@@ -12,7 +13,9 @@ const render = Component => {
   if (document.getElementById('root')) {
     ReactDOM.render(
       <AppContainer>
-        <Component />
+        <Router>
+          <Component />
+        </Router>
       </AppContainer>,
       document.getElementById('root')
     );
