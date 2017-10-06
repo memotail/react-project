@@ -3,13 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import NotFound from './NotFound/index';
 
-import Home from './Home/index';
-import Cat from './Home/Cat/index';
-import CatDetail from './Home/Cat/detail';
-import Dog from './Home/Dog/index';
-
-import Login from './Auth/Login/index';
-import Register from './Auth/Register/index';
+import AsnycComponent from './../components/AsyncComponent';
 
 export default () => {
   return (
@@ -17,14 +11,14 @@ export default () => {
       <Redirect exact from='/' to='/home'/>
 
       {/* home */}
-      <Route path='/home/cat/detail/:id' exact component={ CatDetail } />
-      <Route path='/home/cat' exact component={ Cat } />
-      <Route path='/home/dog' exact component={ Dog } />
-      <Route path='/home' exact component={ Home } />
+      <Route path='/home/cat/detail/:id' exact component={ AsnycComponent(() => import(/* webpackChunkName: "catDetail" */'./Home/Cat/detail')) } />
+      <Route path='/home/cat' exact component={ AsnycComponent(() => import(/* webpackChunkName: "cat" */'./Home/Cat/index')) } />
+      <Route path='/home/dog' exact component={ AsnycComponent(() => import(/* webpackChunkName: "dog" */'./Home/Dog/index')) } />
+      <Route path='/home' exact component={ AsnycComponent(() => import(/* webpackChunkName: "home" */'./Home/index')) } />
 
       {/* auth */}
-      <Route path='/login' component={ Login } />
-      <Route path='/register' component={ Register } />
+      <Route path='/login' component={ AsnycComponent(() => import(/* webpackChunkName: "login" */'./Auth/Login/index')) } />
+      <Route path='/register' component={ AsnycComponent(() => import(/* webpackChunkName: "register" */'./Auth/Register/index')) } />
 
       {/* not found */}
       <Route component={ NotFound }  />
