@@ -1,27 +1,55 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Redirect } from 'react-router-dom';
 
 import NotFound from './NotFound/index';
 
 import AsnycComponent from './../components/AsyncComponent';
 
-export default () => {
+import ApplyedRoute from './../components/route/ApplyedRoute';
+import AuthRoute from './../components/route/AuthRoute';
+import UnAuthRoute from './../components/route/UnAuthRoute';
+
+export default ({ routeProps }) => {
   return (
     <Switch>
-      <Redirect exact from='/' to='/home'/>
+      <Redirect exact from='/' to='/home' props={ routeProps } />
 
       {/* home */}
-      <Route path='/home/cat/detail/:id' exact component={ AsnycComponent(() => import(/* webpackChunkName: "catDetail" */'./Home/Cat/detail')) } />
-      <Route path='/home/cat' exact component={ AsnycComponent(() => import(/* webpackChunkName: "cat" */'./Home/Cat/index')) } />
-      <Route path='/home/dog' exact component={ AsnycComponent(() => import(/* webpackChunkName: "dog" */'./Home/Dog/index')) } />
-      <Route path='/home' exact component={ AsnycComponent(() => import(/* webpackChunkName: "home" */'./Home/index')) } />
+      <AuthRoute
+        path='/home/cat/detail/:id'
+        props={ routeProps }
+        component={ AsnycComponent(() => import('./Home/Cat/detail' /* webpackChunkName: "catDetail" */)) }
+      />
+      <AuthRoute
+        path='/home/cat'
+        props={ routeProps }
+        component={ AsnycComponent(() => import('./Home/Cat/index' /* webpackChunkName: "cat" */)) }
+      />
+      <AuthRoute
+        path='/home/dog'
+        props={ routeProps }
+        component={ AsnycComponent(() => import('./Home/Dog/index' /* webpackChunkName: "dog" */)) }
+      />
+      <AuthRoute
+        path='/home'
+        props={ routeProps }
+        component={ AsnycComponent(() => import('./Home/index' /* webpackChunkName: "home" */)) }
+      />
 
       {/* auth */}
-      <Route path='/login' component={ AsnycComponent(() => import(/* webpackChunkName: "login" */'./Auth/Login/index')) } />
-      <Route path='/register' component={ AsnycComponent(() => import(/* webpackChunkName: "register" */'./Auth/Register/index')) } />
+      <UnAuthRoute
+       path='/login'
+       props={ routeProps }
+       component={ AsnycComponent(() => import('./Auth/Login/index' /* webpackChunkName: "login" */)) }
+      />
+      <UnAuthRoute
+       path='/register'
+       props={ routeProps }
+       component={ AsnycComponent(() => import('./Auth/Register/index' /* webpackChunkName: "register" */)) }
+      />
 
       {/* not found */}
-      <Route component={ NotFound }  />
+      <ApplyedRoute props={ routeProps } component={ NotFound } />
     </Switch>
   );
 };
