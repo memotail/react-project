@@ -42,11 +42,6 @@ export default ({ routeProps }) => {
        props={ routeProps }
        component={ AsnycComponent(() => import('./Auth/Login/index' /* webpackChunkName: "login" */)) }
       />
-      <UnAuthRoute
-       path='/register'
-       props={ routeProps }
-       component={ AsnycComponent(() => import('./Auth/Register/index' /* webpackChunkName: "register" */)) }
-      />
 
       {/* not found */}
       <ApplyedRoute props={ routeProps } component={ NotFound } />

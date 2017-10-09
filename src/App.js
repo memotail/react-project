@@ -18,8 +18,6 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    fetch('http://api.github.com/user');
-
     // 登录判断
     try {
       const user = await this.getUserInfo();
