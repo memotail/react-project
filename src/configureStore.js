@@ -4,13 +4,15 @@ import { routerMiddleware } from 'react-router-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createHistory from 'history/createHashHistory';
 import thunk from 'redux-thunk';
+import { middleware as reduxPackMiddleware } from 'redux-pack';
+
 import rootReducer from './reducers';
 
 const history = createHistory();
 
 // 中间件集合
-const middleware = routerMiddleware(history);
-const middlewares = [thunk, middleware];
+const historyMiddleware = routerMiddleware(history);
+const middlewares = [thunk, historyMiddleware, reduxPackMiddleware];
 
 // 开发环境，添加开发中间件
 if(process.env.NODE_ENV === 'development') {

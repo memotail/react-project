@@ -8,7 +8,7 @@
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.1",
-    "babel-preset-react-app": "^3.0.2",
+    "babel-preset-react-app": "^3.1.0",
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
@@ -41,6 +41,7 @@
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
+    "redux-pack": "^0.1.5",
     "redux-thunk": "^2.2.0",
     "store": "^2.0.12",
     "style-loader": "0.18.2",
@@ -52,7 +53,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "HTTPS=true node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
@@ -92,9 +93,22 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      "babel-plugin-transform-decorators-legacy"
     ]
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-decorators-legacy": "^1.3.4"
+  },
+  "proxy": {
+    "/proxy/douban": {
+      "target": "http://api.douban.com",
+      "pathRewrite": {"/proxy/douban": ""},
+      "changeOrigin": true
+    }
   }
 }
