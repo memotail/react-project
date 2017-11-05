@@ -1,13 +1,13 @@
 import React from 'react';
 
-class Register extends React.Component {
+class Movie extends React.Component {
   render() {
     return (
       <div>
-        <h1>Register</h1>
+        Movie
       </div>
     );
   }
 }
 
-export default Register;
+export default Movie;

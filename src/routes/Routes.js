@@ -6,22 +6,23 @@ import NotFound from './NotFound/index';
 import AsnycComponent from './../components/AsyncComponent';
 
 export default () => {
+  const AsnycFrame = AsnycComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
+
   return (
     <Switch>
-      <Redirect exact from='/' to='/home'/>
-
-      {/* home */}
-      <Route path='/home/cat/detail/:id' exact component={ AsnycComponent(() => import(/* webpackChunkName: "catDetail" */'./Home/Cat/detail')) } />
-      <Route path='/home/cat' exact component={ AsnycComponent(() => import(/* webpackChunkName: "cat" */'./Home/Cat/index')) } />
-      <Route path='/home/dog' exact component={ AsnycComponent(() => import(/* webpackChunkName: "dog" */'./Home/Dog/index')) } />
-      <Route path='/home' exact component={ AsnycComponent(() => import(/* webpackChunkName: "home" */'./Home/index')) } />
-
-      {/* auth */}
-      <Route path='/login' component={ AsnycComponent(() => import(/* webpackChunkName: "login" */'./Auth/Login/index')) } />
-      <Route path='/register' component={ AsnycComponent(() => import(/* webpackChunkName: "register" */'./Auth/Register/index')) } />
+      <Redirect exact from='/' to='/movie'/>
 
       {/* not found */}
-      <Route component={ NotFound }  />
+      <Route path="/404" component={ NotFound } />
+
+      {/* auth */}
+      <Route path='/login' component={ AsnycComponent(() => import('./Auth/Login'/* webpackChunkName: "login" */)) } />
+
+      {/* layout frame */}
+      <Route path='/movie' component={ AsnycFrame } />
+      <Route path='/book' component={ AsnycFrame } />
+
+      <Redirect from='*' to='/404' />
     </Switch>
   );
 };
