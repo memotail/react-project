@@ -3,31 +3,31 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import NotFound from './NotFound/index';
 
-import Home from './Home/index';
-import Cat from './Home/Cat/index';
-import CatDetail from './Home/Cat/detail';
-import Dog from './Home/Dog/index';
+// import Home from './Home/index';
+// import Cat from './Home/Cat/index';
+// import CatDetail from './Home/Cat/detail';
+// import Dog from './Home/Dog/index';
+
+import Frame from './Layout/Frame';
 
 import Login from './Auth/Login/index';
-import Register from './Auth/Register/index';
 
 export default () => {
   return (
     <Switch>
-      <Redirect exact from='/' to='/home'/>
+      <Redirect exact from='/' to='/movie'/>
 
-      {/* home */}
-      <Route path='/home/cat/detail/:id' exact component={ CatDetail } />
-      <Route path='/home/cat' exact component={ Cat } />
-      <Route path='/home/dog' exact component={ Dog } />
-      <Route path='/home' exact component={ Home } />
+      {/* not found */}
+      <Route path="/404" component={ NotFound } />
 
       {/* auth */}
       <Route path='/login' component={ Login } />
-      <Route path='/register' component={ Register } />
 
-      {/* not found */}
-      <Route component={ NotFound }  />
+      {/* layout frame */}
+      <Route path='/movie' component={ Frame } />
+      <Route path='/book' component={ Frame } />
+
+      <Redirect from='*' to='/404' />
     </Switch>
   );
 };
