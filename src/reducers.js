@@ -17,11 +17,11 @@ export function saveStore(store) {
 
 export function injectReducer(key, reducer) {
   // 若该注入的reducer已经存在，则不注入
-  if (asyncReducers[key]) {
+  if (_store.asyncReducers[key]) {
     return false;
   }
 
-  asyncReducers[key] = reducer;
+  _store.asyncReducers[key] = reducer;
   _store.replaceReducer(makeRootReducer(_store.asyncReducers));
 }
 
