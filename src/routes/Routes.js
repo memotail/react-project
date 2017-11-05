@@ -3,14 +3,14 @@ import { Switch, Redirect } from 'react-router-dom';
 
 import NotFound from './NotFound/index';
 
-import AsnycComponent from './../components/AsyncComponent';
+import AsyncComponent from './../components/AsyncComponent';
 
 import ApplyedRoute from './../components/route/ApplyedRoute';
 import AuthRoute from './../components/route/AuthRoute';
 import UnAuthRoute from './../components/route/UnAuthRoute';
 
 export default ({ routeProps }) => {
-  const AsnycFrame = AsnycComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
+  const AsnycFrame = AsyncComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
 
   return (
     <Switch>
@@ -23,7 +23,7 @@ export default ({ routeProps }) => {
       <UnAuthRoute
         path='/login'
         props={ routeProps }
-        component={ AsnycComponent(() => import('./Auth/Login/index' /* webpackChunkName: "login" */)) }
+        component={ AsyncComponent(() => import('./Auth/Login/index' /* webpackChunkName: "login" */)) }
       />
 
       {/* layout frame */}
