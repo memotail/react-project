@@ -10,31 +10,14 @@ import AuthRoute from './../components/route/AuthRoute';
 import UnAuthRoute from './../components/route/UnAuthRoute';
 
 export default ({ routeProps }) => {
+  const AsnycFrame = AsnycComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
+
   return (
     <Switch>
-      <Redirect exact from='/' to='/home' props={ routeProps } />
+      <Redirect exact from='/' to='/movie'/>
 
-      {/* home */}
-      <AuthRoute
-        path='/home/cat/detail/:id'
-        props={ routeProps }
-        component={ AsnycComponent(() => import('./Home/Cat/detail' /* webpackChunkName: "catDetail" */)) }
-      />
-      <AuthRoute
-        path='/home/cat'
-        props={ routeProps }
-        component={ AsnycComponent(() => import('./Home/Cat/index' /* webpackChunkName: "cat" */)) }
-      />
-      <AuthRoute
-        path='/home/dog'
-        props={ routeProps }
-        component={ AsnycComponent(() => import('./Home/Dog/index' /* webpackChunkName: "dog" */)) }
-      />
-      <AuthRoute
-        path='/home'
-        props={ routeProps }
-        component={ AsnycComponent(() => import('./Home/index' /* webpackChunkName: "home" */)) }
-      />
+      {/* not found */}
+      <ApplyedRoute path="/404" props={ routeProps } component={ NotFound } />
 
       {/* auth */}
       <UnAuthRoute
@@ -43,8 +26,11 @@ export default ({ routeProps }) => {
        component={ AsnycComponent(() => import('./Auth/Login/index' /* webpackChunkName: "login" */)) }
       />
 
-      {/* not found */}
-      <ApplyedRoute props={ routeProps } component={ NotFound } />
+      {/* layout frame */}
+      <AuthRoute path='/movie' props={ routeProps } component={ AsnycFrame } />
+      <AuthRoute path='/book' props={ routeProps } component={ AsnycFrame } />
+
+      <Redirect from='*' to='/404' />
     </Switch>
   );
 };

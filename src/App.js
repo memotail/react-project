@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import store from 'store';
-import logo from './logo.svg';
-import './App.css';
 
 import { withRouter } from 'react-router-dom';
 import Routes from './routes/Routes';
-import NavRoute from './components/route/NavRoute';
 
 class App extends Component {
   constructor(props) {
@@ -80,21 +77,11 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>React Project</h2>
-        </div>
         {
           this.state.authenticated ? (
             <button onClick={ this.logout }>退出登录</button>
           ) : null
         }
-        <div>
-          <NavRoute to="/home">home</NavRoute>&nbsp;&nbsp;
-          <NavRoute to="/login">login</NavRoute>&nbsp;&nbsp;
-          <NavRoute to="/home/cat">home/cat</NavRoute>&nbsp;&nbsp;
-          <NavRoute to="/home/dog">home/dog</NavRoute>&nbsp;&nbsp;
-        </div>
         <Routes routeProps={ routeProps } />
       </div>
     );
