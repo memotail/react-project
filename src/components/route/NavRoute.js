@@ -9,7 +9,7 @@ export default ({ to, label, children, exact=true }) =>
     children={({ match, history }) =>
       <Link
         to={ to }
-        style={ match ? { color: '#ff9600' } : null }
+        style={ match ? { color: '#f00' } : null }
       >
         { label || children }
       </Link>
