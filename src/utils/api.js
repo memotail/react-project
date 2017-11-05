@@ -70,7 +70,6 @@ const defaultOptions = {
 
 // http 判断
 function checkStatus(response) {
-  console.log(response)
   if (response.status >= 200 && response.status < 300) {
     return response;
   } else {

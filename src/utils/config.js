@@ -20,8 +20,6 @@ if (process.env.NODE_ENV === 'production') {
 // 配置文件
 const config = {};
 
-console.log(urlPath);
-
 config.getPath = (url, domain = 'api') => {
   return `${urlPath.protocol}://${domain}.${urlPath.hostname}/${url}`
 }
