@@ -5,14 +5,14 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import AsnycComponent from './../../components/AsyncComponent';
+import AsyncComponent from './../../components/AsyncComponent';
 
 // Frames子路有
 export default ({ routeProps }) => {
   return (
     <Switch>
-      <Route exact path="/movie" component={AsnycComponent(() => import('./../Movie'/* webpackChunkName: "movie" */))} />
-      <Route exact path="/book" component={AsnycComponent(() => import('./../Book'/* webpackChunkName: "book" */))} />
+      <Route exact path="/movie" component={AsyncComponent(() => import('./../Movie'/* webpackChunkName: "movie" */))} />
+      <Route exact path="/book" component={AsyncComponent(() => import('./../Book'/* webpackChunkName: "book" */))} />
       <Redirect to='/404' />
     </Switch>
   );

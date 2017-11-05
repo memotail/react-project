@@ -3,10 +3,10 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import NotFound from './NotFound/index';
 
-import AsnycComponent from './../components/AsyncComponent';
+import AsyncComponent from './../components/AsyncComponent';
 
 export default () => {
-  const AsnycFrame = AsnycComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
+  const AsnycFrame = AsyncComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
 
   return (
     <Switch>
@@ -16,7 +16,7 @@ export default () => {
       <Route path="/404" component={ NotFound } />
 
       {/* auth */}
-      <Route path='/login' component={ AsnycComponent(() => import('./Auth/Login'/* webpackChunkName: "login" */)) } />
+      <Route path='/login' component={ AsyncComponent(() => import('./Auth/Login'/* webpackChunkName: "login" */)) } />
 
       {/* layout frame */}
       <Route path='/movie' component={ AsnycFrame } />
