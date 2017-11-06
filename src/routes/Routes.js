@@ -15,19 +15,19 @@ import Login from './Auth/Login/index';
 export default () => {
   return (
     <Switch>
-      <Redirect exact from='/' to='/movie'/>
+      <Redirect exact from="/" to="/movie" />
 
       {/* not found */}
       <Route path="/404" component={ NotFound } />
 
       {/* auth */}
-      <Route path='/login' component={ Login } />
+      <Route path="/login" component={ Login } />
 
       {/* layout frame */}
-      <Route path='/movie' component={ Frame } />
-      <Route path='/book' component={ Frame } />
+      <Route path="/movie" component={ Frame } />
+      <Route path="/book" component={ Frame } />
 
-      <Redirect from='*' to='/404' />
+      <Redirect from="*" to='/404' />
     </Switch>
   );
 };

@@ -8,13 +8,13 @@ import {
 import Movie from './../Movie';
 import Book from './../Book';
 
-// Frames子路有
+// Frames子路由
 export default ({ routeProps }) => {
   return (
     <Switch>
       <Route exact path="/movie" component={ Movie } />
       <Route exact path="/book" component={ Book } />
-      <Redirect to='/404' />
+      <Redirect to="/404" />
     </Switch>
   );
 };
