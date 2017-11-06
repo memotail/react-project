@@ -14,7 +14,7 @@ yarn add react-router react-router-dom
   - `NoFound` 404页面
   - `Routes.js` 路由总入口
 3. 配置路由
-```
+```jsx
 import { withRouter } from 'react-router-dom';
 import Routes from './routes/Routes';
 
