@@ -11,26 +11,23 @@ import UnAuthRoute from './../components/route/UnAuthRoute';
 
 export default ({ routeProps }) => {
   const AsnycFrame = AsyncComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
+  const Login = AsyncComponent(() => import('./Auth/Login/index' /* webpackChunkName: "login" */));
 
   return (
     <Switch>
-      <Redirect exact from='/' to='/movie'/>
+      <Redirect exact from="/" to="/movie" />
 
       {/* not found */}
       <ApplyedRoute path="/404" props={ routeProps } component={ NotFound } />
 
       {/* auth */}
-      <UnAuthRoute
-       path='/login'
-       props={ routeProps }
-       component={ AsyncComponent(() => import('./Auth/Login/index' /* webpackChunkName: "login" */)) }
-      />
+      <UnAuthRoute path="/login" props={ routeProps } component={ Login } />
 
       {/* layout frame */}
-      <AuthRoute path='/movie' props={ routeProps } component={ AsnycFrame } />
-      <AuthRoute path='/book' props={ routeProps } component={ AsnycFrame } />
+      <AuthRoute path="/movie" props={ routeProps } component={ AsnycFrame } />
+      <AuthRoute path="/book" props={ routeProps } component={ AsnycFrame } />
 
-      <Redirect from='*' to='/404' />
+      <Redirect from="*" to="/404" />
     </Switch>
   );
 };
