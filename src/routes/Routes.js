@@ -7,22 +7,23 @@ import AsyncComponent from './../components/AsyncComponent';
 
 export default () => {
   const AsnycFrame = AsyncComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
+  const Login = AsyncComponent(() => import('./Auth/Login'/* webpackChunkName: "login" */))
 
   return (
     <Switch>
-      <Redirect exact from='/' to='/movie'/>
+      <Redirect exact from="/" to="/movie"/>
 
       {/* not found */}
       <Route path="/404" component={ NotFound } />
 
       {/* auth */}
-      <Route path='/login' component={ AsyncComponent(() => import('./Auth/Login'/* webpackChunkName: "login" */)) } />
+      <Route path="/login" component={ Login } />
 
       {/* layout frame */}
-      <Route path='/movie' component={ AsnycFrame } />
-      <Route path='/book' component={ AsnycFrame } />
+      <Route path="/movie" component={ AsnycFrame } />
+      <Route path="/book" component={ AsnycFrame } />
 
-      <Redirect from='*' to='/404' />
+      <Redirect from="*" to="/404" />
     </Switch>
   );
 };
