@@ -1,4 +1,4 @@
-#async-reducer, 异步注入reducer
+# async-reducer, 异步注入reducer
 代码再分割，异步reducer，较少体积
 
 1. 更改`./src/reducers.js`, 添加`injectReducer`函数以及`saveStore`，以便调用`replaceReducer`进行注入reducer
