@@ -9,10 +9,10 @@ import ApplyedRoute from './../components/route/ApplyedRoute';
 import AuthRoute from './../components/route/AuthRoute';
 import UnAuthRoute from './../components/route/UnAuthRoute';
 
-export default ({ routeProps }) => {
-  const AsnycFrame = AsyncComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
-  const Login = AsyncComponent(() => import('./Auth/Login/index' /* webpackChunkName: "login" */));
+const AsnycFrame = AsyncComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
+const Login = AsyncComponent(() => import('./Auth/Login/index' /* webpackChunkName: "login" */));
 
+export default ({ routeProps }) => {
   return (
     <Switch>
       <Redirect exact from="/" to="/movie" />
