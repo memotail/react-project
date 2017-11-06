@@ -9,8 +9,9 @@ yarn add redux react-redux react-router-redux@next
 2. 添加根reducers，`./src/reducers.js`
 
 3. 安装中间件，方便开发
-    - `redux-thunk`、
-    - `redux-logger`、`redux-devtools-extension`
+    - `redux-thunk` 让action支持函数调用方式
+    - `redux-logger` 浏览器输出每次reducer变更的情况
+    - `redux-devtools-extension` 若安装了`Redux DevTools`chrome插件，则能通过该插件控制和查看状态
 
 4. redux配置
     1. 新建`./src/configuerStore.js`用于配置中间件来创建store
