@@ -23,6 +23,9 @@ const Movie = AsyncComponent(() =>
 
 const Book = AsyncComponent(() => import('./../Book'/* webpackChunkName: "book" */));
 
+const Movie = AsyncComponent(() => import('./../Movie/Index'/* webpackChunkName: "movie" */));
+const Book = AsyncComponent(() => import('./../Book'/* webpackChunkName: "book" */));
+
 // Frames子路有
 export default ({ routeProps }) => {
   return (
