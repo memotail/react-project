@@ -7,15 +7,15 @@ import {
 
 import AsyncComponent from './../../components/AsyncComponent';
 
-const book = AsyncComponent(() => import('./../Movie'/* webpackChunkName: "movie" */));
-const movie = AsyncComponent(() => import('./../Book'/* webpackChunkName: "book" */));
+const Movie = AsyncComponent(() => import('./../Movie'/* webpackChunkName: "movie" */));
+const Book = AsyncComponent(() => import('./../Book'/* webpackChunkName: "book" */));
 
 // Frames子路有
 export default ({ routeProps }) => {
   return (
     <Switch>
-      <Route exact path="/movie" component={movie} />
-      <Route exact path="/book" component={book} />
+      <Route exact path="/movie" component={ Movie } />
+      <Route exact path="/book" component={ Book } />
       <Redirect to="/404" />
     </Switch>
   );

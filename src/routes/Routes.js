@@ -5,10 +5,10 @@ import NotFound from './NotFound/index';
 
 import AsyncComponent from './../components/AsyncComponent';
 
-export default () => {
-  const AsnycFrame = AsyncComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
-  const Login = AsyncComponent(() => import('./Auth/Login'/* webpackChunkName: "login" */))
+const AsnycFrame = AsyncComponent(() => import('./Layout/Frame'/* webpackChunkName: "layoutFrame" */));
+const Login = AsyncComponent(() => import('./Auth/Login'/* webpackChunkName: "login" */))
 
+export default () => {
   return (
     <Switch>
       <Redirect exact from="/" to="/movie"/>
