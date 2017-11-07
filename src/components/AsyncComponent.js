@@ -16,12 +16,18 @@ export default loadComponent => (
       loadComponent()
         .then(module => module.default)
         .then((Component) => {
-          this.setState({ Component });
+          if (!this.unmount) {
+            this.setState({ Component });
+          }
         })
         .catch((err) => {
           console.error(`Cannot load component in <AsyncComponent />`);
           throw err;
         });
+    }
+
+    componentWillUnmount() {
+      this.unmount = true;
     }
 
     hasLoadedComponent() {

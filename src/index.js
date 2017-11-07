@@ -5,7 +5,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import configureStore from './configureStore';
 
 import { AppContainer } from 'react-hot-loader';
-import App from './App';
+import App from './routes/App';
 import registerServiceWorker from './registerServiceWorker';
 
 const { history, store } = configureStore();
@@ -28,7 +28,7 @@ const render = Component => {
 render(App);
 
 if (module.hot) {
-  module.hot.accept('./App', () => {
+  module.hot.accept('./routes/App', () => {
     render(App);
   });
 }

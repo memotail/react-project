@@ -1,7 +1,5 @@
 import React from 'react';
 
-import store from 'store';
-
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -36,11 +34,10 @@ class Login extends React.Component {
       isFetching: true
     });
 
+    // 模拟登录行为
     setTimeout(() => {
-      store.set('user', this.state.user);
-
-      // 一般登录成功需要返回用户信息
-      this.props.setAuthenticated(this.state.user);
+      // 登录成功，则调用获取用户信息
+      this.props.getUserInfo(this.state.user);
     }, 300);
   }
 
@@ -74,7 +71,7 @@ class Login extends React.Component {
             />
           </div>
           <div>
-            <button disabled={ !this.validate() }>
+            <button disabled={ !this.validate() || isFetching }>
               { isFetching ? '登录中...' : '登录' }
             </button>
           </div>
