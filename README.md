@@ -1,106 +1,46 @@
-# 退出登录，重置reducer到初始化状态
-1. 清理`./src/routes/App/reducers.js`的 退出登录 行为
-2. 将`store.remove('user');`移到 `./src/routes/App/actions.js`中处理
-    ```javascript
-    // 退出登录
-    export function logout() {
-      return {
-        type: types.logout,
-        promise: mock().then((response) => {
-          // 删掉用户信息存储
-          store.remove('user');
+# 一步一步搭建React项目
 
-          return response;
-        })
-      }
-    }
-    ```
-3. 更改`./src/reducers.js`，添加退出登录判定，以及重置state
-    ```javascript
-    // 更改前
-    function makeRootReducer(asyncReducers) {
-      return combineReducers({
-        app,
-        router: routerReducer,
-        ...asyncReducers
-      });
-    }
-    ```
+现在各种React手脚架，对React入门带来极大的方便。但直接拿来也会有些问题，如：
 
-    ```javascript
-    // 更改后
-    import * as appTypes from './routes/App/constants';
+1. 代码版本不够新
+2. 所需的插件不包含
+3. 业务定制化
+4. 整个全家桶等的关联不是很熟悉
+5. ...等等
 
-    // 若退出登录，则重置所有state
-    function resetReducer(rootReducer) {
-      return (state, action) => {
-        if (action.type === appTypes.logout) {
-          // state为空对象，导致所有reducer的state为null，会导致使用默认state
-          state = {};
-        }
+因此，自己从头搭建很有必要
 
-        return rootReducer(state, action);
-      }
-    };
+从简单的手脚架一步一步搭建，达到对整个React架构的认识。
 
-    // 根reducer
-    function rootReducer(asyncReducers = {}) {
-      return combineReducers({
-        app,
-        router: routerReducer,
-        ...asyncReducers
-      });
-    }
 
-    // 构建reducer树
-    function makeRootReducer(asyncReducers) {
-      return resetReducer(rootReducer(asyncReducers));
-    }
-    ```
-##### 重置reducer说明
+#### 步骤
+- [x] 1. [create-react-app](https://github.com/memotail/react-project/tree/create-react-app) 通过官方手脚架开始，自定义webpack配置，已达到自身要求
+- [x] 2. [hot-replace](https://github.com/memotail/react-project/tree/hot-replace) 为项目提供热替换能力，避免刷新视图
+- [x] 3. [react-router](https://github.com/memotail/react-project/tree/react-router) 添加路由
+- [x] 4. [code-splitting](https://github.com/memotail/react-project/tree/code-splitting) 代码分割，在路由切换后，按需加载模块，减少首次体积
+- [x] 5. [custom-router](https://github.com/memotail/react-project/tree/custom-router) 自定义路由，用于登录状态校验等
+- [x] 6. [redux](https://github.com/memotail/react-project/tree/redux) 初始化redux配置，使用redux做状态管理
+- [x] 7. [redux-fetch](https://github.com/memotail/react-project/tree/redux-fetch) 添加异步请求，完成从redux到react的数据传递
+- [x] 8. [async-reducer](https://github.com/memotail/react-project/tree/async-reducer) 代码再分割，异步reducer，较少体积
+- [x] 9. [global-redux](https://github.com/memotail/react-project/tree/global-redux) 通过redux存储全局app状态，将获取用户信息、退出登录等使用redux管理
+- [x] 10. [reset-redux](https://github.com/memotail/react-project/tree/reset-redux), 退出登录，重置reducer，避免账号切换后遗留之前的数据
+- [ ] 11. styled-component，样式美化
+- [ ] 12. douban, 豆瓣PC页面模拟
+- [ ] 13. i18n，国际化配置，适配多语言
+- [ ] 14. react-media，视图分离，进行深层次的响应式
+- [ ] 15. douban-mobile，豆瓣移动端页面模拟
+- [ ] 16. ...(待续)
 
-1. 每个action的调用，都会遍历全部reducer
-2. state是全部reducer公用的一个庞大的树，所以第一个reducer把公用的树重置为空后，后面的所有reducer遍历中，state的传递，就是`undefined`。
-3. 所以，在根reducer最开始运行`logout`的判断，若是退出登录，则设置`state={}`，再进行剩下所有reducer的判断。
-4. 当reducer进行判定时候，因为state是`undefined`，所以一开始在参数中定义的默认值就生效，如: `(state={ data={} }, action)`，然后`action.type`判定不匹配，所以直接返回state，也就是默认值。
-5. 另外值得注意的是，默认值必须在参数上定义，若在函数外定义，默认值被污染，重置不了
-    ```javascript
-    // ES6
-    function reducer(state={
-        data: {}
-    }, action) {
-        switch(action.type) {
-            // ...略
-            default:
-                return state;
-        }
-    }
-    ```
+#### 用法
+clone该仓库，并安装npm依赖包
 
-    ```javascript
-
-    // 最终转换为
-    function reducer() {
-        var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { data: {} };
-        var action = arguments[1];
-
-        switch(action.type) {
-            // ...略
-            default:
-                return state;
-        }
-    }
-    ```
-
-    ```javascript
-    // 错误定义方式
-    // 这样会导致每次state变更都更改了initState，所以重置也不是默认值。
-    const initState = { data: {} };
-    function reducer(state=initState, action) {
-        switch(action.type) {
-            // ...略
-            default:
-                return state;
-        }
-    }
-    ```
+```
+git clone https://github.com/memotail/react-project.git
+```
+```
+npm install
+```
+启动开发服务器
+```
+npm start
+```
