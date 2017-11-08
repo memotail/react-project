@@ -6,21 +6,8 @@ import {
 } from 'react-router-dom';
 
 import AsyncComponent from './../../components/AsyncComponent';
-import { injectReducer } from './../../reducers';
 
-const Movie = AsyncComponent(() =>
-  Promise.all([
-    import('./../Movie/Index'/* webpackChunkName: "movie" */),
-    import('./../Movie/Index/reducers'/* webpackChunkName: "movieReducers" */)
-  ]).then(([component, reducer]) => {
-    // 异步加载完模块时候，注入reducers
-    injectReducer('movie', reducer.default);
-
-    // 返回component，AsyncComponent异步后，需要渲染component
-    return component;
-  })
-);
-
+const Movie = AsyncComponent(() => import('./../Movie/Index'/* webpackChunkName: "movie" */));
 const Book = AsyncComponent(() => import('./../Book'/* webpackChunkName: "book" */));
 
 // Frames子路有
