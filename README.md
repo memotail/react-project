@@ -25,7 +25,9 @@
         ...asyncReducers
       });
     }
+    ```
 
+    ```javascript
     // 更改后
     import * as appTypes from './routes/App/constants';
 
