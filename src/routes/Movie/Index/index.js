@@ -2,6 +2,11 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './actions';
+import reducer from './reducers';
+
+import injectReducer from './../../../utils/injectReducer';
+
+injectReducer('movie', reducer);
 
 @connect(
   state => state.movie,

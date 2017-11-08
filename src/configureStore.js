@@ -6,7 +6,8 @@ import createHistory from 'history/createHashHistory';
 import thunk from 'redux-thunk';
 import { middleware as reduxPackMiddleware } from 'redux-pack';
 
-import makeRootReducer, { saveStore } from './reducers';
+import makeRootReducer from './reducers';
+import { initInjectReducer } from './utils/injectReducer';
 
 const history = createHistory();
 
@@ -26,7 +27,7 @@ export default function configureStore(initialState) {
   const store = createStore(makeRootReducer(), initialState, composeWithDevTools(applyMiddleware(...middlewares)));
 
   // 保存store，提供给inject reducer使用
-  saveStore(store);
+  initInjectReducer(store);
 
   // 异步reducers集合
   store.asyncReducers = {};
