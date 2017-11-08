@@ -76,11 +76,11 @@ export default function configureStore(initialState) {
 
   // 若reducer更改，则热替换
   if (module.hot) {
-		module.hot.accept('./reducers', () => {
-			const reducers = require('./reducers').default
-			store.replaceReducer(reducers(store.asyncReducers))
-		});
-	}
+    module.hot.accept('./reducers', () => {
+      const reducers = require('./reducers').default
+      store.replaceReducer(reducers(store.asyncReducers))
+    });
+  }
 
   return {
     history,
