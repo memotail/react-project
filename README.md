@@ -1,60 +1,60 @@
 # async-reducer, 异步注入reducer
 代码再分割，异步reducer，较少体积
 
-1. 更改`./src/reducers.js`, 添加`injectReducer`函数以及`saveStore`，以便调用`replaceReducer`进行注入reducer
+1. 更改`./src/reducers.js`，以便支持异步reducer
 ```javascript
-// ./src/reducers.js
-import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
-
-let _store;
-
-function makeRootReducer(asyncReducers) {
+// 更改前
+export default combineReducers({
+  //...
+  movie,
+  router: routerReducer
+});
+```
+```javascript
+// 更改后
+function makeRootReducer(asyncReducers = {}) {
   return combineReducers({
     router: routerReducer,
     ...asyncReducers
   });
 }
-
-// 在configureStore中，调用保存，用于后续异步注入reducer免得传递store
-export function saveStore(store) {
-  _store = store;
-}
-
-export function injectReducer(key, reducer) {
-  // 若该注入的reducer已经存在，则不注入
-  if (asyncReducers[key]) {
-    return false;
-  }
-
-  asyncReducers[key] = reducer;
-  _store.replaceReducer(makeRootReducer(_store.asyncReducers));
-}
-
 export default makeRootReducer;
 ```
 
-2. 更改`./src/configureStore.js`，调用`saveStore`来保存store，并且添加热替换配置
+2. 新增`./src/utils/injectReducer.js`，用于模块页面调用来注入reducer
 ```javascript
-// ./src/configureStore.js
-// ... 省略前面代码
+import makeRootReducer from './../reducers';
 
-export default function configureStore(initialState) {
-  const store = createStore(makeRootReducer(), initialState, composeWithDevTools(applyMiddleware(...middlewares)));
+let injectReducer = () => {
+  console.warn('must run initInjectReducer(store)');
+}
 
-  // 保存store，提供给inject reducer使用
-  saveStore(store);
+/**
+ * 初始化reducer注入方法，用于缓存store，避免injectReducer时候每次都要传递store
+ * @param {Object} store redux store
+ */
+export function initInjectReducer(store) {
+  return injectReducer = (key, reducer) => {
+    // 若该注入的reducer已经存在，则不注入
+    if (store.asyncReducers[key]) {
+      return false;
+    }
 
-  // 异步reducers集合
-  store.asyncReducers = {};
-
-  // 若reducer更改，则热替换
-  if (module.hot) {
-    module.hot.accept('./reducers', () => {
-      const reducers = require('./reducers').default
-      store.replaceReducer(reducers(store.asyncReducers))
-    });
+    store.asyncReducers[key] = reducer;
+    store.replaceReducer(makeRootReducer(store.asyncReducers));
   }
+}
+
+export default (key, reducer) => {
+  injectReducer(key, reducer);
+};
+
+```
+3. 更改`./src/configureStore.js`，初始化`injectReducer`，并且添加热替换配置
+```javascript
+// 更改前
+export default function configureStore(initialState) {
+  const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...middlewares)));
 
   return {
     history,
@@ -62,26 +62,38 @@ export default function configureStore(initialState) {
   };
 }
 ```
-3. 更改路由动态注入模块方式，更改为支持reducer注入
+
 ```javascript
-// ./src/routes/Layout/FrameRoutes.js
-
-// 更改前
-const Movie = AsyncComponent(() => import('./../Movie/Index'/* webpackChunkName: "movie" */)};
-
 // 更改后
-import { injectReducer } from './../../reducers';
+export default function configureStore(initialState) {
+  const store = createStore(makeRootReducer(), initialState, composeWithDevTools(applyMiddleware(...middlewares)));
 
-const Movie = AsyncComponent(() =>
-  Promise.all([
-    import('./../Movie/Index'/* webpackChunkName: "movie" */),
-    import('./../Movie/Index/reducers'/* webpackChunkName: "movieReducers" */)
-  ]).then(([component, reducer]) => {
-    // 异步加载完模块时候，注入reducers
-    injectReducer('movie', reducer.default);
+  // 保存store，提供给inject reducer使用
+  initInjectReducer(store);
 
-    // 返回component，AsyncComponent异步后，需要渲染component
-    return component;
-  })
-);
+  // 异步reducers集合
+  store.asyncReducers = {};
+
+  // 若reducer更改，则热替换
+  if (module.hot) {
+		module.hot.accept('./reducers', () => {
+			const reducers = require('./reducers').default
+			store.replaceReducer(reducers(store.asyncReducers))
+		});
+	}
+
+  return {
+    history,
+    store
+  };
+}
+```
+4. 页面，注入reducer
+```javascript
+// ./src/routes/Movie/Index/index.js
+import reducer from './reducers';
+
+import injectReducer from './../../../utils/injectReducer';
+
+injectReducer('movie', reducer);
 ```
