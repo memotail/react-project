@@ -25,6 +25,11 @@ export function getUserInfo(user) {
 export function logout() {
   return {
     type: types.logout,
-    promise: mock()
+    promise: mock().then((response) => {
+      // 删掉用户信息存储
+      store.remove('user');
+
+      return response;
+    })
   }
 }

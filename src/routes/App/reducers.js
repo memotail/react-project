@@ -40,20 +40,6 @@ export function auth(state={
           }
         }
       });
-    // 退出登录
-    case types.logout:
-      return handle(state, action, {
-        // 不用等待后端返回，直接退出
-        start: (prevState) => {
-          store.remove('user');
-
-          return {
-            isLoading: false,
-            isLoaded: false,
-            data: null
-          };
-        }
-      })
     default:
       return state;
   }
