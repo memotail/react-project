@@ -75,6 +75,9 @@
                 return state;
         }
     }
+    ```
+
+    ```javascript
 
     // 最终转换为
     function reducer() {
@@ -87,7 +90,9 @@
                 return state;
         }
     }
+    ```
 
+    ```javascript
     // 错误定义方式
     // 这样会导致每次state变更都更改了initState，所以重置也不是默认值。
     const initState = { data: {} };
