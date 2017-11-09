@@ -25,8 +25,8 @@
 - [x] 9. [global-redux](https://github.com/memotail/react-project/tree/global-redux) 通过redux存储全局app状态，将获取用户信息、退出登录等使用redux管理
 - [x] 10. [reset-redux](https://github.com/memotail/react-project/tree/reset-redux), 退出登录，重置reducer，避免账号切换后遗留之前的数据
 - [x] 11. [ant-design](https://github.com/memotail/react-project/tree/ant-design) 添加ant-design UI框架，方便开发
-- [ ] 12. [ant-design-theme](https://github.com/memotail/react-project/tree/ant-design-theme) 添加主题配置，以便于更改ant-design 样式
-- [ ] 13. styled-component，样式美化
+- [x] 12. [ant-design-theme](https://github.com/memotail/react-project/tree/ant-design-theme) 添加主题配置，以便于更改ant-design 样式
+- [ ] 13. styled-component，样式组件化
 - [ ] 14. douban, 豆瓣PC页面模拟
 - [ ] 15. i18n，国际化配置，适配多语言
 - [ ] 16. react-media，视图分离，进行深层次的响应式
