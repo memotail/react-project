@@ -54,6 +54,7 @@
     "jest": "20.0.4",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
+    "less-vars-to-js": "^1.2.0",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.6",
@@ -125,5 +126,6 @@
       },
       "changeOrigin": true
     }
-  }
+  },
+  "theme": "./src/theme/modifyVars.js"
 }

@@ -8,6 +8,10 @@ import { AppContainer } from 'react-hot-loader';
 import App from './routes/App';
 import registerServiceWorker from './registerServiceWorker';
 
+// 重置css
+import './theme/index.less'
+import './theme/config';
+
 const { history, store } = configureStore();
 
 const render = Component => {

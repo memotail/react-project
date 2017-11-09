@@ -4085,6 +4085,10 @@ less-loader@^4.0.5:
     loader-utils "^1.1.0"
     pify "^2.3.0"
 
+less-vars-to-js@^1.2.0:
+  version "1.2.0"
+  resolved "http://registry.npm.taobao.org/less-vars-to-js/download/less-vars-to-js-1.2.0.tgz#a9cbccddd2b10d0b74f0017af168382c9e37cba1"
+
 less@^2.7.3:
   version "2.7.3"
   resolved "http://registry.npm.taobao.org/less/download/less-2.7.3.tgz#cc1260f51c900a9ec0d91fb6998139e02507b63b"
