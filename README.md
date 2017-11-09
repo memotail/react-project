@@ -1,48 +1,68 @@
-# 一步一步搭建React项目
+# 更改ant-design默认样式
 
-现在各种React手脚架，对React入门带来极大的方便。但直接拿来也会有些问题，如：
-
-1. 代码版本不够新
-2. 所需的插件不包含
-3. 业务定制化
-4. 整个全家桶等的关联不是很熟悉
-5. ...等等
-
-因此，自己从头搭建很有必要
-
-从简单的手脚架一步一步搭建，达到对整个React架构的认识。
-
-
-#### 步骤
-- [x] 1. [create-react-app](https://github.com/memotail/react-project/tree/create-react-app) 通过官方手脚架开始，自定义webpack配置，已达到自身要求
-- [x] 2. [hot-replace](https://github.com/memotail/react-project/tree/hot-replace) 为项目提供热替换能力，避免刷新视图
-- [x] 3. [react-router](https://github.com/memotail/react-project/tree/react-router) 添加路由
-- [x] 4. [code-splitting](https://github.com/memotail/react-project/tree/code-splitting) 代码分割，在路由切换后，按需加载模块，减少首次体积
-- [x] 5. [custom-router](https://github.com/memotail/react-project/tree/custom-router) 自定义路由，用于登录状态校验等
-- [x] 6. [redux](https://github.com/memotail/react-project/tree/redux) 初始化redux配置，使用redux做状态管理
-- [x] 7. [redux-fetch](https://github.com/memotail/react-project/tree/redux-fetch) 添加异步请求，完成从redux到react的数据传递
-- [x] 8. [async-reducer](https://github.com/memotail/react-project/tree/async-reducer) 代码再分割，异步reducer，较少体积
-- [x] 9. [global-redux](https://github.com/memotail/react-project/tree/global-redux) 通过redux存储全局app状态，将获取用户信息、退出登录等使用redux管理
-- [x] 10. [reset-redux](https://github.com/memotail/react-project/tree/reset-redux), 退出登录，重置reducer，避免账号切换后遗留之前的数据
-- [x] 11. [ant-design](https://github.com/memotail/react-project/tree/ant-design) 添加ant-design UI框架，方便开发
-- [ ] 12. [ant-design-theme](https://github.com/memotail/react-project/tree/ant-design-theme) 添加主题配置，以便于更改ant-design 样式
-- [ ] 13. styled-component，样式美化
-- [ ] 14. douban, 豆瓣PC页面模拟
-- [ ] 15. i18n，国际化配置，适配多语言
-- [ ] 16. react-media，视图分离，进行深层次的响应式
-- [ ] 17. douban-mobile，豆瓣移动端页面模拟
-- [ ] 18. ...(待续)
-
-#### 用法
-clone该仓库，并安装npm依赖包
-
+1. 安装`less-vars-to-js`
 ```
-git clone https://github.com/memotail/react-project.git
+yarn add less-vars-to-js --dev
 ```
+
+2. 新建`./src/theme`目录，以及以下文件
+    - `config.js`   用于ant-design部分组件通过脚本更改的位置
+    - `default.less`    重置less变量
+    - `index.less`      重写css样式，通过less变量更改达不到需求的css，在这里重载
+    - `modifyVars.js`   读取`default.less`，将css变量转为js，提供给webpack使用
+
+3. app入口文件`./index.js` 中导入重载的css以及配置
+```javascript
+// 重载css
+import './theme/index.less'
+import './theme/config';
 ```
-npm install
+
+4. 更改`./package.json`，添加theme路径设置，让webpack读取`package.json`来读取变量更改
+```javascript
+"theme": "./src/theme/modifyVars.js"
 ```
-启动开发服务器
+
+5. 更改`./config/webpack.config.dev.js`以及`./config/webpack.config.prod.js`配置，将theme的变量提供给`less-loader`
+```javascript
+// 1. 读取package.json文件，获取theme字段，得到变量配置文件地址"./src/theme/modifyVars.js"
+// 2. 运行配置文件，得到变量对象
+// 3. 也可以在package.json编写配置对象
+
+const fs = require('fs');
+
+// import theme
+const pkgPath = path.join(process.cwd(), 'package.json');
+const pkg = fs.existsSync(pkgPath) ? require(pkgPath) : {};
+let theme = {};
+
+if (pkg.theme && typeof(pkg.theme) === 'string') {
+  let cfgPath = pkg.theme;
+  // relative path
+  if (cfgPath.charAt(0) === '.') {
+    cfgPath = path.resolve(process.cwd(), cfgPath);
+  }
+
+  const getThemeConfig = require(cfgPath);
+  theme = getThemeConfig();
+} else if (pkg.theme && typeof(pkg.theme) === 'object') {
+  theme = pkg.theme;
+}
 ```
-npm start
+
+```javascript
+// 将主题变量对象，提供给less-loader的options.modifyVars使用，让less-loader在编译ant-design时候，使用新的变量
+
+// 更改前
+{
+  loader:'less-loader'
+}
+
+// 更改后
+{
+  loader:'less-loader',
+  options: {
+    modifyVars: theme
+  }
+}
 ```
