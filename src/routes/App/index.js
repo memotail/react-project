@@ -7,6 +7,10 @@ import * as appActions from './actions';
 import { withRouter } from 'react-router-dom';
 import Routes from './../Routes';
 
+import {
+  Button
+} from 'antd';
+
 @withRouter
 @connect(
   (state) => state.app,
@@ -47,7 +51,7 @@ class App extends Component {
         {
           authenticated ? (
             <div>
-              你好，{ auth.data.name } <button onClick={ this.logout }>退出登录</button>
+              你好，{ auth.data.name } <Button onClick={ this.logout }>退出登录</Button>
             </div>
           ) : null
         }
