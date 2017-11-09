@@ -1,7 +1,7 @@
 // 开发环境，使用默认配置
 let urlPath = {
   protocol: 'https',
-  hostname: 'b2btst2.win'
+  hostname: 'dev.com'
 };
 
 // 编译后环境，通过location.href来定义
